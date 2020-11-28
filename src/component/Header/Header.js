@@ -1,10 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../../contexts";
 import { setAuthToken } from "../../utilis";
-import PropTypes from "prop-types";
-import HomePage from "../../pages/HomePage";
-import LoginPage from "../../pages/LoginPage";
 
 import { Link, useLocation, useHistory } from "react-router-dom";
 

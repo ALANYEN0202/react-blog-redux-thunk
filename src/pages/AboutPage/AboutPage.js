@@ -1,9 +1,6 @@
-import React, { useState, useContext } from "react";
-import { register, getMe } from "../../WepAPI";
+import React from "react";
 import styled from "styled-components";
-import { setAuthToken } from "../../utilis";
-import { AuthContext } from "../../contexts";
-import { useHistory } from "react-router-dom";
+
 
 const AboutContainer = styled.div`
   margin: 0 auto;

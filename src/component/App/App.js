@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../../contexts";
-import PropTypes from "prop-types";
 import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
 import PostPage from "../../pages/SinglePage";
