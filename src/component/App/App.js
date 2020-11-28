@@ -25,7 +25,7 @@ function App() {
       setIsLoadingLogin(true);
       getMe().then((res) => {
         if (res.ok !== 1) {
-          return;
+          return setIsLoadingLogin(false);
         }
         setUser(res.data);
         setIsLoadingLogin(false);
