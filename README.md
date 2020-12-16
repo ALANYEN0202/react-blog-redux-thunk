@@ -1,12 +1,12 @@
 # blog
 
-## 這是什麼123
+## 這是什麼
 
-這是利用 React 做的比較完整一點的部落格，使用 Function Hook 來練習，裡面有使用了 styled component 做樣式 、 Router 做換頁 、createContext 來往下傳遞資料 useContext 來接收資料用來做使用者的驗證功能、也簡單串了 API 來顯示文章。 
+這是利用 React 做的比較完整一點的部落格，比較特別的地方是使用了 redux 來統一管理需要放在全域變數的資料， API 的部分也使用了 Redux-thunk 來處理 
 
 ## Demo
 
-[Demo](https://alanyen0202.github.io/react-blog)
+[Demo](https://alanyen0202.github.io/react-blog-redux-thunk/)
 
 ## 功能
 
@@ -17,6 +17,9 @@
 - 身份驗證 ( 登入才可發表文章 )
 - 發表文章
 - 可看單篇文章
+- 刪除文章 ( 登入才可發表文章 )
+- 更改文章 ( 登入才可發表文章 )
+
 
 Route 的部分使用 React Router。
 
