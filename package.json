@@ -16,7 +16,6 @@
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
-  "homepage": "https://alanyen0202.github.io/react-blog-redux-thunk",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
