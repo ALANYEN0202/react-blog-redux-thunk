@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { getPosts, getLimitPosts } from "../../WepAPI";
 import {  Link } from "react-router-dom";
+import PostFeatrues from "../../component/PostFeatrues";
+import { useDispatch, useSelector } from 'react-redux';
+import { getPosts, setActivePage } from "../../redux/reducers/postReducer";
 
 const Root = styled.div`
   position: relative;
@@ -60,26 +62,32 @@ const PagesButton = styled.button`
   `}
 `;
 
+const PostInfo = styled.div``
+
 function Post({ post }) {
+  const user = useSelector(store => store.users.user)
   return (
     <PostContainer>
       <PostTitle to={`/posts/${post.id}`}>{post.title}</PostTitle>
-      <PostDate>{new Date(post.createdAt).toLocaleString()}</PostDate>
+      <PostInfo>
+        {user && <PostFeatrues post={post} />}
+        <PostDate>{new Date(post.createdAt).toLocaleString()}</PostDate>
+      </PostInfo>
     </PostContainer>
   );
 }
 
-function Pages({ allPagesNumber, pages, setPages }) {
+function Pagination({ allPaginationsNumber, activePage, handlePagePagination}) {
   let arr = [];
-  for (let i = 1; i <= allPagesNumber; i++) {
+  for (let i = 1; i <= allPaginationsNumber; i++) {
     arr.push(i);
   }
   return arr.map((number) => (
     <PagesButton
       key={number}
-      $active={pages === number}
+      $active={activePage === number}
       onClick={() => {
-        setPages(number);
+        handlePagePagination(number)
       }}
     >
       {number}
@@ -92,29 +100,30 @@ Post.propTypes = {
 };
 
 export default function HomePage() {
-  const limit = 5;
-  const [posts, setPost] = useState([]);
-  const [pages, setPages] = useState(1);
-  const [allPagesNumber, setAllPagesNumber] = useState();
+  const dispatch = useDispatch()
+  const post = useSelector(store => store.posts.post)
+  const limit = useSelector(store => store.posts.limit)
+  const activePage = useSelector(store => store.posts.activePage)
+  const allPaginationsNumber = useSelector(store => store.posts.allPaginationsNumber)
+
+  const handlePagePagination = (number) => {
+    dispatch(setActivePage(number))
+  }
 
   useEffect(() => {
-    getPosts().then((posts) => {
-      setAllPagesNumber([Math.ceil(posts.length / limit)]);
-    });
-
-    getLimitPosts(limit, pages).then((posts) => setPost(posts));
-  }, [pages]);
+    dispatch(getPosts(limit, activePage))
+  },[dispatch, activePage, limit])
 
   return (
     <Root>
-      {posts.map((post) => (
+      {post.length && post.map((post) => (
         <Post key={post.id} post={post} />
       ))}
       <PagesContainer>
-        <Pages
-          allPagesNumber={allPagesNumber}
-          pages={pages}
-          setPages={setPages}
+        <Pagination
+          allPaginationsNumber={allPaginationsNumber}
+          activePage={activePage}
+          handlePagePagination={handlePagePagination}
         />
       </PagesContainer>
     </Root>

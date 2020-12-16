@@ -9,7 +9,7 @@ export const getPosts = () => {
 export const getLimitPosts = (limit, pages) => {
   return fetch(
     `${BASE_URL}/posts?_sort=createdAt&_order=desc&_limit=${limit}&_page=${pages}`
-  ).then((res) => res.json());
+  ).then((res) => res)
 };
 
 export const getSinglePage = (id) => {
@@ -66,3 +66,25 @@ export const postArticle = (title, body) => {
     }),
   }).then((res) => res.json());
 };
+
+export const updateArticle = (title, body, id) => {
+    return fetch(`${BASE_URL}/posts/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        body,
+      }),
+    }).then((res) => res.json());
+  }
+
+export const deleteArticle = (id) => {
+  return fetch(`${BASE_URL}/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((res) => res.json());
+}

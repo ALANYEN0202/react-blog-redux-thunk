@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
-import { register, getMe } from "../../WepAPI";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { setAuthToken } from "../../utilis";
-import { AuthContext } from "../../contexts";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector} from "react-redux"
+import { postRegister } from "../../redux/reducers/userReducer";
 
 const ErrorMessage = styled.div`
   color: red;
@@ -42,26 +41,21 @@ export default function RegisterPage() {
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
-  const { setUser } = useContext(AuthContext);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const errorMessage = useSelector(store => store.users.errorMessage)
+  const user = useSelector(store => store.users.user)
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    register(nickname, username, password).then((data) => {
-      if (data.ok !== 1) {
-        return setErrorMessage(data.message);
-      }
-      setAuthToken(data.token);
-      getMe().then((res) => {
-        if (res.ok !== 1) {
-          return setErrorMessage(data.message);
-        }
-        setUser(res.data);
-        history.push("/");
-      });
-    });
-  };
+    dispatch(postRegister(nickname, username, password))
+  }
+
+  useEffect(() => {
+    if(user && user.id) {
+      history.push('/')
+    }
+  },[user, history])
 
   return (
     <Form onSubmit={handleRegisterSubmit}>

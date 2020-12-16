@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { postArticle } from "../../WepAPI";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { newPost, clearPostResponse } from "../../redux/reducers/postReducer";
 import { useHistory } from "react-router-dom";
+
+
 
 const ErrorMessage = styled.div`
   color: red;
@@ -47,20 +50,31 @@ const SubmitButton = styled.button`
 export default function NewPostPage() {
   const [title, setTitle] = useState("");
   const [textArea, setTextArea] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
-  const history = useHistory();
+  const [errorMessage, setErrorMessage] = useState(null)
+  const dispatch = useDispatch();
+  const history = useHistory()
+  const newPostResponse = useSelector(store => store.posts.newPostResponse)
+  const isLoadingPost = useSelector(store => store.posts.isLoadingPost)
+  
 
-  const handlePostPageSubmit = (e) => {
-    setErrorMessage(null);
-    console.log(textArea);
-    e.preventDefault();
-    postArticle(title, textArea).then((data) => {
-      if (data.ok === 0) {
-        return setErrorMessage(data.message);
-      }
-      history.push("/");
-    });
+  const handlePostPageSubmit = () => {
+    dispatch(newPost(title, textArea))
   };
+
+  useEffect(() => {
+    if(newPostResponse) {
+      if(newPostResponse.ok === 0) {
+        return setErrorMessage(newPostResponse.message)
+      }
+      history.push(`/posts/${newPostResponse.id}`)
+    }
+  }, [newPostResponse, history])
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearPostResponse())
+    }
+  })
 
   return (
     <PostContainer>
@@ -81,7 +95,7 @@ export default function NewPostPage() {
             setTextArea(e.target.value);
           }}
         />
-        <SubmitButton>發布文章</SubmitButton>
+        {!isLoadingPost && <SubmitButton>發布文章</SubmitButton>}
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Form>
     </PostContainer>

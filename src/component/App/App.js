@@ -1,40 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { AuthContext } from "../../contexts";
 import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
 import PostPage from "../../pages/SinglePage";
 import RegisterPage from "../../pages/RegisterPage";
 import AboutPage from "../../pages/AboutPage";
 import NewPostPage from "../../pages/NewPostPage";
+import UpdatePostPage from "../../pages/UpdatePostPage"
 import Header from "../Header";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
-import { getMe } from "../../WepAPI";
 import { getAuthToken } from "../../utilis";
+import { useDispatch, useSelector } from "react-redux"
+import { getTokenLogin } from "../../redux/reducers/userReducer"
 
 const Root = styled.div`
   padding-top: 64px;
 `;
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
+  const isLoadingLogin = useSelector(store => store.users.isLoadingLogin)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (getAuthToken() !== "") {
-      setIsLoadingLogin(true);
-      getMe().then((res) => {
-        if (res.ok !== 1) {
-          return setIsLoadingLogin(false);
-        }
-        setUser(res.data);
-        setIsLoadingLogin(false);
-      });
+      dispatch(getTokenLogin())
     }
-  }, []);
+  },[dispatch])
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
       <Root>
         <Router>
           {!isLoadingLogin && <Header />}
@@ -57,10 +50,12 @@ function App() {
             <Route path="/new-post">
               <NewPostPage />
             </Route>
+            <Route path="/update-post/:id">
+              <UpdatePostPage />
+            </Route>
           </Switch>
         </Router>
       </Root>
-    </AuthContext.Provider>
   );
 }
 

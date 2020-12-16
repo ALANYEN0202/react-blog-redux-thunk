@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { AuthContext } from "../../contexts";
 import { setAuthToken } from "../../utilis";
+import { useDispatch, useSelector} from "react-redux"
+import { clearUser } from "../../redux/reducers/userReducer";
 
 import { Link, useLocation, useHistory } from "react-router-dom";
 
@@ -75,16 +76,17 @@ const LeftContainer = styled.div`
 
 function Header() {
   const location = useLocation();
-  const { user, setUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const user = useSelector(store => store.users.user)
   const history = useHistory();
 
   const handleLogout = () => {
     setAuthToken("");
-    setUser(null);
+    dispatch(clearUser());
     if (location.pathname !== "/") {
       history.push("/");
     }
-  };
+  }
 
   return (
     <HeaderContainer>
@@ -98,24 +100,19 @@ function Header() {
             關於這個部落格
           </Nav>
           {user && (
-            <Nav to="/new-post" $active={location.pathname === "/new-post"}>
-              發布文章
-            </Nav>
+            <Nav to="/new-post" $active={location.pathname === "/new-post"}> 發布文章 </Nav>
           )}
         </NavbarList>
       </LeftContainer>
       <NavbarList>
-        {!user && (
-          <Nav to="/login" $active={location.pathname === "/login"}>
-            登入
-          </Nav>
+        {user ? (
+        <Logout onClick={handleLogout}>登出</Logout>
+        ) : (
+          <>
+            <Nav to="/login" $active={location.pathname === "/login"}>登入</Nav>
+            <Nav to="/register" $active={location.pathname === "/register"}>註冊</Nav>
+          </>
         )}
-        {!user && (
-          <Nav to="/register" $active={location.pathname === "/register"}>
-            註冊
-          </Nav>
-        )}
-        {user && <Logout onClick={handleLogout}>登出</Logout>}
       </NavbarList>
     </HeaderContainer>
   );
