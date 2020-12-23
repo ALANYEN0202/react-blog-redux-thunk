@@ -50,7 +50,7 @@ const Nav = styled(Link)`
 
   ${MEDIA_QUERY_MD} {
       margin: 0px;
-      padding: 5px;
+      padding: 10px 5px;
     }
 
   ${(props) =>
