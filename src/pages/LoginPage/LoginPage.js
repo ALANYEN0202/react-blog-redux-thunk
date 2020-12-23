@@ -21,6 +21,10 @@ const Button = styled.button`
   }
 `;
 
+const LoginContainer = styled.div`
+  margin-top: 10vh;
+`
+
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -41,26 +45,28 @@ export default function LoginPage() {
   })
 
   return (
-    <form onSubmit={handleSubmit}>
-      username:{" "}
-      <input
-        style={{ marginRight: "8px" }}
-        value={username}
-        onChange={(e) => {
-          setUsername(e.target.value);
-        }}
-      />
-      password:{" "}
-      <input
-        style={{ marginRight: "8px" }}
-        type="password"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
-      <Button>登入</Button>
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-    </form>
+    <LoginContainer>
+      <form onSubmit={handleSubmit}>
+        username:{" "}
+        <input
+          style={{ marginRight: "8px" }}
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+        password:{" "}
+        <input
+          style={{ marginRight: "8px" }}
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <Button>登入</Button>
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      </form>
+    </LoginContainer>
   );
 }

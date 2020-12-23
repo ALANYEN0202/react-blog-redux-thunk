@@ -12,6 +12,7 @@ const ErrorMessage = styled.div`
 
 const PostContainer = styled.div`
   text-align: center;
+  margin-top: 10vh;
 `;
 
 const Form = styled.form``;

@@ -5,6 +5,7 @@ import styled from "styled-components";
 const AboutContainer = styled.div`
   margin: 0 auto;
   width: 80%;
+  margin-top: 10vh;
 `;
 
 const AboutTitle = styled.div`

@@ -5,11 +5,13 @@ import {  Link } from "react-router-dom";
 import PostFeatrues from "../../component/PostFeatrues";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, setActivePage } from "../../redux/reducers/postReducer";
+import { MEDIA_QUERY_MD } from "../../constants/style"
 
 const Root = styled.div`
   position: relative;
   width: 80%;
   margin: 0 auto;
+  margin-top: 10vh;
 `;
 
 const PostContainer = styled.div`
@@ -18,6 +20,7 @@ const PostContainer = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+
 `;
 
 const PostTitle = styled(Link)`

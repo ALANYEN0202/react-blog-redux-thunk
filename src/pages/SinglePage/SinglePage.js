@@ -9,6 +9,7 @@ import PostFeatrues from "../../component/PostFeatrues";
 
 const PostContainer = styled.div`
   padding: 8px;
+  margin-top: 10vh;
 `;
 
 const PostTitle = styled.div``;

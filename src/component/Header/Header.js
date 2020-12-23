@@ -7,7 +7,6 @@ import { MEDIA_QUERY_MD } from "../../constants/style"
 import { Link, useLocation, useHistory } from "react-router-dom";
 
 const HeaderContainer = styled.div`
-  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,8 +20,7 @@ const HeaderContainer = styled.div`
   z-index: 2;
 
   ${MEDIA_QUERY_MD} {
-    padding: 40px 0px;
-    flex-direction: column;
+    
   }
 `;
 
@@ -47,11 +45,6 @@ const Nav = styled(Link)`
   cursor: pointer;
   color: black;
   text-decoration: none;
-
-  ${MEDIA_QUERY_MD} {
-      margin: 0px;
-      padding: 10px 5px;
-    }
 
   ${(props) =>
     props.$active &&

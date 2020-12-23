@@ -10,6 +10,7 @@ const ErrorMessage = styled.div`
 
 const Form = styled.form`
   text-align: center;
+  margin-top: 10vh;
 `;
 
 const Input = styled.input`
