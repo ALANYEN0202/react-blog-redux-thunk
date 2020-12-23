@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { setAuthToken } from "../../utilis";
 import { useDispatch, useSelector} from "react-redux"
 import { clearUser } from "../../redux/reducers/userReducer";
-
+import { MEDIA_QUERY_MD } from "../../constants/style"
 import { Link, useLocation, useHistory } from "react-router-dom";
 
 const HeaderContainer = styled.div`
@@ -19,9 +19,18 @@ const HeaderContainer = styled.div`
   padding: 0px 32px;
   background: rgba(255, 255, 255, 1);
   z-index: 2;
+
+  ${MEDIA_QUERY_MD} {
+    padding: 40px 0px;
+    flex-direction: column;
+  }
 `;
 
-const Board = styled.h1``;
+const Board = styled.h1`
+  ${MEDIA_QUERY_MD} {
+    margin: 0px;
+  }
+`;
 
 const NavbarList = styled.div`
   display: flex;
@@ -38,6 +47,11 @@ const Nav = styled(Link)`
   cursor: pointer;
   color: black;
   text-decoration: none;
+
+  ${MEDIA_QUERY_MD} {
+      margin: 0px;
+      padding: 5px;
+    }
 
   ${(props) =>
     props.$active &&
@@ -72,6 +86,10 @@ const Logout = styled.button`
 const LeftContainer = styled.div`
   display: flex;
   align-items: center;
+
+  ${MEDIA_QUERY_MD} {
+    flex-direction: column;
+  }
 `;
 
 function Header() {

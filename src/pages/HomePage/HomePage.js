@@ -24,6 +24,7 @@ const PostTitle = styled(Link)`
   font-size: 24px;
   color: #333;
   text-decoration: none;
+  max-width: 100vh;
 `;
 
 const PostDate = styled.div`
